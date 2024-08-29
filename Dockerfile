@@ -1,4 +1,4 @@
-FROM python:latest
+FROM python:3.10
 
 # Create a system user and group
 RUN addgroup --system iiif && adduser --system iiif --ingroup iiif
