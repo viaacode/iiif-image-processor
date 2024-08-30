@@ -46,10 +46,14 @@ if __name__ == "__main__":
     parser.add_argument(
         "--max_size", type=str, default=None, help="Max width for the transformed image", required=False
     )
+    parser.add_argument(
+        "--profile", type=str, default=None, help="Kakadu profile to be used", required=False
+    )
     args = parser.parse_args()
     file_path = args.file_path
     destination = args.destination
     max_size = args.max_size
+    profile = args.profile
 
     # Copy file and rename it to external_id.
     # File has to be copied so metadata can be added again later.
@@ -87,7 +91,7 @@ if __name__ == "__main__":
     file_transformer.convert_to_srgb(file_path, icc)
 
     # Encode to jp2
-    encoded_file = file_transformer.encode_image(file_path)
+    encoded_file = file_transformer.encode_image(file_path, profile)
     logger.debug("Encoded file %s", encoded_file)
 
     # Add metadata to file

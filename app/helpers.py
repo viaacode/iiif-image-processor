@@ -4,6 +4,7 @@ import ntpath
 from retry import retry
 from shutil import copy2, move
 import xml.etree.ElementTree as ET
+from pathlib import Path
 
 # External imports
 import exiftool
@@ -276,3 +277,11 @@ def check_pronom_id(file_path, expected_pronom_id):
     """
     pronom_id = pygfried.identify(file_path)
     return pronom_id == expected_pronom_id
+
+def get_profile(file_path) -> str:
+    """Extract profile name from file_path. Files will be exported to <visibility>/<profile_name>/<pid>.<extension>
+
+    Args:
+        file_path (str): <visibility>/<profile_name>/<pid>.<extension>
+    """
+    return Path(file_path).parent.stem

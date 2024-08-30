@@ -13,7 +13,7 @@ from viaa.observability import logging
 # External imports
 import inotify.adapters
 
-from app.helpers import get_iiif_file_destination, check_pronom_id
+from app.helpers import get_iiif_file_destination, check_pronom_id, get_profile
 
 
 APP_NAME = "iiif-image-processor"
@@ -89,6 +89,8 @@ class Watcher:
             destination = get_iiif_file_destination(
                 file_to_transform_path, sidecar_path, visibility
             )
+            
+            profile = get_profile(full_file_path)
 
             # my_env = environ.copy()
             # my_env["PATH"] = f"/opt/iiif-image-processing/env/bin:{my_env['PATH']}"
@@ -100,7 +102,8 @@ class Watcher:
             subprocess.run(
                 "python3 /opt/iiif-image-processing/transform_file.py"
                 + f" --file_path {file_to_transform_path}"
-                + f" --destination {destination}",
+                + f" --destination {destination}"
+                + f" --profile {profile}",
                 shell=True,
                 check=True,
                 # env=my_env,

@@ -1,5 +1,6 @@
 # System imports
 import subprocess
+from pathlib import Path
 
 # External imports
 from PIL import Image
@@ -67,8 +68,19 @@ class FileTransformer:
             i.profiles["ICC"] = icc
             i.save(filename=file_path)
             logger.debug("writing to %s", file_path)
+            
+    def load_profile(self, profile):
+        file = Path(f"profiles/{profile}.profile")
+        if not file.exists():
+            print(f"'{profile}' profile does not exist, using default profile.")
+            file = Path(f"profiles/default.profile")
 
-    def encode_image(self, input_file_path) -> str:
+        with file.open('r') as f:
+            lines = f.readlines()
+            lines = [line.strip() for line in lines]
+        return lines
+
+    def encode_image(self, input_file_path, profile) -> str:
         """Encode image to jp2 file using Kakadu.
 
         Params:
@@ -77,26 +89,7 @@ class FileTransformer:
         Returns:
             Path to encoded image
         """
-        kakadu_options = [
-            "Clevels=5",
-            "Clayers=12",
-            "Cprecincts={256,256}",
-            "Cblk={64,64}",
-            "Cuse_sop=yes",
-            "Cuse_eph=yes",
-            "Creversible=no",
-            "Corder=RPCL",
-            "ORGgen_plt=yes",
-            "ORGtparts=R",
-            "ORGplt_parts=R",
-            "Qfactor=100",
-            "-rate",
-            "2.5,0.5",
-            "-no_weights",
-            "-precise",
-            "-flush_period",
-            "1024",
-        ]
+        kakadu_options = self.load_profile(profile)
 
         # Construct path to new image
         file_name = get_file_name_without_extension(input_file_path)
