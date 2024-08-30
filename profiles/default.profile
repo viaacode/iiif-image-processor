@@ -1,4 +1,3 @@
-Cmodes=HT
 Clevels=5
 Clayers=12
 Cprecincts={256,256}

@@ -27,9 +27,6 @@ class Watcher:
         self.log = logging.get_logger(__name__, config=config_parser)
         self.config = config_parser.app_cfg
 
-        # Topics
-        self.app_config = self.config["mh-sip-creator"]
-        self.consumer_topic = self.app_config["consumer_topic"]
 
     def unzip_incoming_zip_to_workfolder(self) -> tuple[str, str]:
         # Unzips incoming zips from `FOLDER_TO_WATCH` in `WORKFOLDER`
@@ -93,8 +90,8 @@ class Watcher:
                 file_to_transform_path, sidecar_path, visibility
             )
 
-            my_env = environ.copy()
-            my_env["PATH"] = f"/opt/iiif-image-processing/env/bin:{my_env['PATH']}"
+            # my_env = environ.copy()
+            # my_env["PATH"] = f"/opt/iiif-image-processing/env/bin:{my_env['PATH']}"
 
             self.log.debug("Running transform_file for %s", file_to_transform_path)
             self.log.debug("Destination %s", destination)
@@ -106,7 +103,7 @@ class Watcher:
                 + f" --destination {destination}",
                 shell=True,
                 check=True,
-                env=my_env,
+                # env=my_env,
             )
 
             # Remove temporary files and folders

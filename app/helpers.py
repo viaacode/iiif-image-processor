@@ -176,7 +176,7 @@ def get_metadata_from_image(file_path):
     Returns:
         metadata: dict containing all metadata
     """
-    with exiftool.ExifTool() as et:
+    with exiftool.ExifToolHelper() as et:
         metadata = et.get_metadata(file_path)
         return metadata
 
@@ -215,6 +215,8 @@ def move_file(source, destination):
         source: path to source file
         destination: path to destination file
     """
+    print(source)
+    print(destination)
     if os.path.exists(source):
         move(source, destination)
     else:
