@@ -258,7 +258,7 @@ def get_iiif_file_destination(essence_file_path, sidecar_file_path, visibility):
         + characters
         + "/"
         + essence_file_name
-        + ".jph"
+        + ".jp2"
     )
 
     return destination
