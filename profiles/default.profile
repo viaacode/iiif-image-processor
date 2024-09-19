@@ -1,6 +1,6 @@
 Clevels=5
 Clayers=12
-Cprecincts={256,256}
+Cprecincts={256,256},{256,256},{128,128}
 Cblk={64,64}
 Cuse_sop=yes
 Cuse_eph=yes
@@ -9,9 +9,9 @@ Corder=RPCL
 ORGgen_plt=yes
 ORGtparts=R
 ORGplt_parts=R
-Qfactor=100
+Qfactor=95
 -rate
-2.5,0.5
+3,0.25
 -no_weights
 -precise
 -flush_period
