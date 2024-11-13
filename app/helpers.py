@@ -224,7 +224,7 @@ def move_file(source, destination):
         print(f"The source file {source} does not exist")
 
 
-def get_iiif_file_destination(essence_file_path, sidecar_file_path, visibility):
+def get_iiif_file_destination(essence_file_path, sidecar_file_path, visibility, cp_id):
     """Determine the destination location of a IIIF image file.
     The destination is constructed as following:
     - base folder
@@ -245,7 +245,6 @@ def get_iiif_file_destination(essence_file_path, sidecar_file_path, visibility):
     root = tree.getroot()
 
     image_base_folder = "/export/images/"
-    or_id = root.find(".//CP_id").text
     essence_file_name = root.find(".//FragmentId").text
     characters = essence_file_name[:2]
 
@@ -253,7 +252,7 @@ def get_iiif_file_destination(essence_file_path, sidecar_file_path, visibility):
         image_base_folder
         + visibility
         + "/"
-        + or_id
+        + cp_id
         + "/"
         + characters
         + "/"

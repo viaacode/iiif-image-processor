@@ -1,10 +1,10 @@
-
 # System imports
 import subprocess
 import zipfile
 import shutil
 from pathlib import Path
 from os import walk, environ
+import re
 
 # Internal imports
 from viaa.configuration import ConfigParser
@@ -27,13 +27,12 @@ class Watcher:
         self.log = logging.get_logger(__name__, config=config_parser)
         self.config = config_parser.app_cfg
 
-
     def unzip_incoming_zip_to_workfolder(self) -> tuple[str, str]:
         # Unzips incoming zips from `FOLDER_TO_WATCH` in `WORKFOLDER`
         # Returns path to esssence and sidecar as a tuple
         return ("", "")
         pass
-    
+
     def main(self) -> None:
         i = inotify.adapters.InotifyTree(FOLDER_TO_WATCH)
         self.log.info(f"Watching directory: '{FOLDER_TO_WATCH}'")
@@ -85,11 +84,12 @@ class Watcher:
 
             # Calculate visibilty
             visibility = "public" if "public" in path else "restricted"
+            cp_id = re.findall("OR-.{7}", path)[0]
 
             destination = get_iiif_file_destination(
-                file_to_transform_path, sidecar_path, visibility
+                file_to_transform_path, sidecar_path, visibility, cp_id
             )
-            
+
             profile = get_profile(full_file_path)
 
             # my_env = environ.copy()
