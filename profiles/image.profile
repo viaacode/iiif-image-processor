@@ -16,5 +16,3 @@ Qfactor=100
 -precise
 -flush_period
 1024
--jpx_space
-sRGB
